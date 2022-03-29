@@ -3,6 +3,22 @@
 
 En la teoría de grafos, la coloración de grafos es un caso especial de etiquetado de grafos; es una asignación de etiquetas tradicionalmente llamadas "colores" a los elementos de un grafo sujeta a ciertas restricciones. En su forma más simple, es una forma de colorear los vértices de un grafo de manera que **no haya dos vértices adyacentes del mismo color**; esto se llama colorear vértices.
 
+En términos de teoría de grafos, una coloración adecuada de vértices con k colores es un mapeo.
+ 
+ ![](https://github.com/TranquilinoHG/Metaheuristicas/blob/main/formula1.png)
+ 
+ tal que
+ 
+ ![](https://github.com/TranquilinoHG/Metaheuristicas/blob/main/formula2.png)
+ 
+ ### Número cromatico
+ 
+ El número mínimo de colores para el que existe una coloración de vértices adecuada para un grafo G dado se conoce como el **número cromático** del grafo G y se denota por   **_χ(G)._**
+
+Para cual grafo **_G_** no igual **_Kn_** o **_En_** entonces  **_χ(G)>1_**
+
+**El problema de colorear vértices es NP-completo.** 
+ 
 ### Aplicaciones ###
 1) Elaboración de un horario o tabla de tiempos: Supongamos que queremos hacer un calendario de exámenes para una universidad. Tenemos una lista de diferentes asignaturas y estudiantes matriculados en cada una de ellas. Muchas asignaturas tendrían alumnos comunes (de la misma hornada, algunos alumnos atrasados, etc). ¿Cómo podemos programar el examen para que no haya dos exámenes con un mismo alumno a la misma hora? ¿Cuántas franjas horarias mínimas se necesitan para programar todos los exámenes? Este problema se puede representar como un grafo en el que cada vértice es una asignatura y una arista entre dos vértices significa que hay un alumno común. Por tanto, se trata de un problema de coloreado de grafos en el que el número mínimo de franjas horarias es igual al número cromático del grafo.
 
@@ -38,6 +54,11 @@ N = 9
 3. Verde
 4. Rojo
 
+En este ejemplo el numero cromatico es
+
+**_χ(G) = 4_**
+
+
 ### Matriz de costo ####
 
 
@@ -54,10 +75,9 @@ N = 9
 |**M** |0 |0 |0 |0 |1 |1 |1 |1 |0 |
 
 
+## Función objetivo
+
+**_min de χ(G)._**
 
 
-
-## Modelo
-### Función objetivo
-
-
+ 
