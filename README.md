@@ -20,17 +20,12 @@ Para cual grafo **_G_** no igual **_Kn_** o **_En_** entonces  **_χ(G)>1_**
 **El problema de colorear vértices es NP-completo.** 
  
 ### Aplicaciones ###
-1) Elaboración de un horario o tabla de tiempos: Supongamos que queremos hacer un calendario de exámenes para una universidad. Tenemos una lista de diferentes asignaturas y estudiantes matriculados en cada una de ellas. Muchas asignaturas tendrían alumnos comunes (de la misma hornada, algunos alumnos atrasados, etc). ¿Cómo podemos programar el examen para que no haya dos exámenes con un mismo alumno a la misma hora? ¿Cuántas franjas horarias mínimas se necesitan para programar todos los exámenes? Este problema se puede representar como un grafo en el que cada vértice es una asignatura y una arista entre dos vértices significa que hay un alumno común. Por tanto, se trata de un problema de coloreado de grafos en el que el número mínimo de franjas horarias es igual al número cromático del grafo.
-
-2) Asignación de frecuencias de radio móvil: Cuando se asignan frecuencias a las torres, las frecuencias asignadas a todas las torres en la misma ubicación deben ser diferentes. ¿Cómo se asignan las frecuencias con esta restricción? ¿Cuál es el número mínimo de frecuencias necesario? Este problema es también una instancia del problema de coloreado de grafos donde cada torre representa un vértice y una arista entre dos torres representa que están en el rango de la otra.
-
-3) Sudoku: El sudoku es también una variación del problema de coloreado de grafos donde cada celda representa un vértice. Hay una arista entre dos vértices si están en la misma fila o en la misma columna o en el mismo bloque.
-
-4) Asignación de registros: En la optimización del compilador, la asignación de registros es el proceso de asignar un gran número de variables del programa objetivo a un pequeño número de registros de la CPU. Este problema es también un problema de coloreado de grafos.
-
-5) Grafos bipartitos: Podemos comprobar si un gráfico es bipartito o no coloreando el gráfico con dos colores. Si un grafo dado es coloreable con dos colores, entonces es bipartito, de lo contrario no. Vea esto para más detalles.
-
-6) Colorear mapas: Mapas geográficos de países o estados en los que no se puede asignar el mismo color a dos ciudades adyacentes. Cuatro colores son suficientes para colorear cualquier mapa
+1) Elaboración de un horario o tabla de tiempos.
+2) Asignación de frecuencias de radio móvil.
+3) Sudoku.
+4) Asignación de registros.
+5) Grafos bipartitos.
+6) Colorear mapas.
 
 ### Ejemplo ### 
 **Grafo de ejemplo**
@@ -69,15 +64,37 @@ En este ejemplo el numero cromatico es
 |**P** |0 |0 |0 |0 |0 |1 |1 |0 |0 |
 |**C** |1 |0 |0 |0 |0 |0 |0 |1 |0 |
 |**I** |1 |0 |0 |0 |0 |1 |0 |0 |1 |
-|**L** |1 |1 |1 |0 |0 |1 |1 |0 |1 |
+|**L** |1 |1 |1 |0 |1 |0 |1 |0 |1 |
 |**G** |0 |1 |1 |0 |0 |1 |0 |1 |1 |
 |**A** |0 |0 |0 |1 |0 |0 |1 |0 |1 |
 |**M** |0 |0 |0 |0 |1 |1 |1 |1 |0 |
 
 
-## Función objetivo
+## Función de costo
+``` python
+def Costo(sol):
+  ncolores=len(Counter(sol))
+  return ncolores
+```
 
-**_min de χ(G)._**
+## Funcion generar vecino
+``` python
+def Genera_Vecino(size,graph,color):
+  sol = [0 for i in range(size)]
+  ncolor=random.uniform(1, size+1)
+  for i in range(size):
+    r = int(random.uniform(1, ncolor))
+    sol[i] = r
+  #verfifica que la solucion sea valida  
+  if (isSafe(graph, sol,size))==-1:
+    sol=Genera_Vecino(size,graph,color)
+  return sol
+```
+##  Instansias a ejecutar 
+ 1. 100
+ 2. 1000
+ 3. 1000000
+
 
 
  
