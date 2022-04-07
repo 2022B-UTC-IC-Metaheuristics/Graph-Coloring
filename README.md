@@ -5,11 +5,11 @@ En la teoría de grafos, la coloración de grafos es un caso especial de etiquet
 
 En términos de teoría de grafos, una coloración adecuada de vértices con k colores es un mapeo.
  
- ![](https://github.com/TranquilinoHG/Metaheuristicas/blob/main/formula1.png)
+ ![](formula1.png)
  
  tal que
  
- ![](https://github.com/TranquilinoHG/Metaheuristicas/blob/main/formula2.png)
+ ![](formula2.png)
  
  ### Número cromatico
  
@@ -30,7 +30,7 @@ Para cual grafo **_G_** no igual **_Kn_** o **_En_** entonces  **_χ(G)>1_**
 ### Ejemplo ### 
 **Grafo de ejemplo**
 
-![Grafo de ejemplo.](https://github.com/TranquilinoHG/Metaheuristicas/blob/main/grafoSinResolver.png)  
+![Grafo de ejemplo.](grafoSinResolver.png)  
 
 Para este ejemplo tenemos que el numero de grafos es de 
 
@@ -39,7 +39,7 @@ N = 9
 
 ### Solucion del grafo de ejemplo.
 
-![Solucion de Grafo de ejemplo.](https://github.com/TranquilinoHG/Metaheuristicas/blob/main/grafo.png)
+![Solucion de Grafo de ejemplo.](grafo.png)
 
 #### Vector de solución.
 **[1, 2, 2, 3, 3, 4, 3, 4, 2]**
@@ -91,9 +91,25 @@ def Genera_Vecino(size,graph,color):
   return sol
 ```
 ##  Instansias a ejecutar 
- 1. 100
- 2. 1000
- 3. 1000000
+
+ 1. 10    con al menos tres vertices en promedio
+ 2. 50    con al menos tres vertices en promedio
+ 3. 500  con al menos tres vertices en promedio
+
+Los archivos se encuentran disponibles como 10grafos.csv...
+
+A continuacion el codigo para leer el arhivo csv y guardarlo en una matriz.
+
+``` python
+import csv
+newMatrix = []
+with open('nombre.csv', 'r', newline='') as file:
+  myreader = csv.reader(file, delimiter=',')
+  for rows in myreader:
+   newMatrix.append(rows)
+newMatrix = np.array(newMatrix)
+
+```
 
 
 
