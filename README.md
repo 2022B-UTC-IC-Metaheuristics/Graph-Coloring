@@ -90,7 +90,7 @@ def Genera_Vecino(size,graph,color):
     sol=Genera_Vecino(size,graph,color)
   return sol
 ```
-##  Instansias a ejecutar 
+##  Instancias a ejecutar 
 
  1. 10    con al menos tres vertices en promedio
  2. 50    con al menos tres vertices en promedio
