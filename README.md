@@ -1,25 +1,16 @@
 # Graph-Coloring
-### Definicion del problema ###
+## Definicion del Problema
 
-En la teoría de grafos, la coloración de grafos es un caso especial de etiquetado de grafos; es una asignación de etiquetas tradicionalmente llamadas "colores" a los elementos de un grafo sujeta a ciertas restricciones. En su forma más simple, es una forma de colorear los vértices de un grafo de manera que **no haya dos vértices adyacentes del mismo color**; esto se llama colorear vértices.
+En la teoría de grafos, el problema de 'Graph Coloring' es la tarea de asignar colores a los vértices de un grafo de modo que a los pares de vértices adyacentes se les asignan diferentes colores, y el número de colores diferentes utilizados en el gráfico es mínimo.
 
-En términos de teoría de grafos, una coloración adecuada de vértices con k colores es un mapeo.
- 
- ![](formula1.png)
- 
- tal que
- 
- ![](formula2.png)
- 
- ### Número cromatico
- 
- El número mínimo de colores para el que existe una coloración de vértices adecuada para un grafo G dado se conoce como el **número cromático** del grafo G y se denota por   **_χ(G)._**
+**El problema Graph Coloring es un problema NP-completo.**
 
-Para cual grafo **_G_** no igual **_Kn_** o **_En_** entonces  **_χ(G)>1_**
+## Número Crómatico
 
-**El problema de colorear vértices es NP-completo.** 
+El número más pequeño de colores necesarios para colorear un gráfico G se llama su número cromático.
  
-### Aplicaciones ###
+## Aplicaciones
+
 1) Elaboración de un horario o tabla de tiempos.
 2) Asignación de frecuencias de radio móvil.
 3) Sudoku.
@@ -27,35 +18,25 @@ Para cual grafo **_G_** no igual **_Kn_** o **_En_** entonces  **_χ(G)>1_**
 5) Grafos bipartitos.
 6) Colorear mapas.
 
-### Ejemplo ### 
-**Grafo de ejemplo**
+## Grafo de Ejemplo
 
-![Grafo de ejemplo.](grafoSinResolver.png)  
+El siguiente gráfico ha sido coloreado usando solo cuatro colores (rojo, azul, verde y amarillo). Este es en realidad el número mínimo de colores necesarios para este grafo en particular, es decir, no podemos colorear este grafo usando menos de cuatro colores mientras nos aseguramos de que los vértices adyacentes tengan un color diferente.
 
-Para este ejemplo tenemos que el numero de grafos es de 
+![Grafo de ejemplo](Imagen_GC.png)
 
-N = 9
+Así que el número cromático de este gráfico es 4 y se denota x(G), significa x(G)=4.
 
+## Solucion del Grafo de Ejemplo
 
-### Solucion del grafo de ejemplo.
+### Vector de Solución
+**[1, 3, 2, 4, 3, 4, 3, 2, 2]**
 
-![Solucion de Grafo de ejemplo.](grafo.png)
-
-#### Vector de solución.
-**[1, 2, 2, 3, 3, 4, 3, 4, 2]**
-
-1. Amarrilo  
-2. Azul 
+1. Amarrilo
+2. Azul
 3. Verde
 4. Rojo
 
-En este ejemplo el numero cromatico es
-
-**_χ(G) = 4_**
-
-
-### Matriz de costo ####
-
+### Matriz de Costos
 
 |  |S |H |P |C |I |L |G |A |M |
 |--|--|--|--|--|--|--|--|--|--|
@@ -110,8 +91,3 @@ with open('nombre.csv', 'r', newline='') as file:
 newMatrix = np.array(newMatrix)
 
 ```
-
-
-
- 
-
