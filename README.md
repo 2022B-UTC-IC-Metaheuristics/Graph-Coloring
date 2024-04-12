@@ -1,4 +1,5 @@
 # Graph-Coloring
+update by CorvoHyatt (Raul Ruvalcaba)
 ## Definicion del Problema
 
 En la teoría de grafos, el problema de 'Graph Coloring' es la tarea de asignar colores a los vértices de un grafo de modo que a los pares de vértices adyacentes se les asignan diferentes colores, y el número de colores diferentes utilizados en el gráfico es mínimo.
@@ -102,9 +103,25 @@ def graph_coloring(solucion, graph):
 
 ##  Instancias a ejecutar
 ``` python
-solucion = Genera_Vecino(10, newMatrix)
-print("Solución: ", solucion)
-print("Número Crómatico: ", Costo(solucion))
+parametros = {
+	"graph": G,
+    "problem_type": "COP",
+    "codification": "combination",
+    "cooling": "geometric",
+    "min_or_max":"min",
+    "limits": (1, 10),
+    "precision": 1,
+    "variables":1,
+    "alpha": 0.99,
+    "beta": 0.8,
+    "time": 1,
+    "equilibrium": 15,
+    "temperature": 600,
+    "final_temperature": 0.01,
+}
+sa = SimulatedAnnealing(**parametros)
+colors = sa.fit(graph_coloring)
+print(colors)
 ```
 
 ### 10 Nodos
