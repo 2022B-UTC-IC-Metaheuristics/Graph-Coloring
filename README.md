@@ -78,6 +78,9 @@ plt.show()
 
 ## Especificación
 Se considera que **el tamaño de la solución es de tamaño igual a la cantidad de nodos.** También no nos preocupamos por generar una solución que cumpla con las restricciones, ya que la función objetivo se encarga de penalizar las soluciones con conflictos en el coloreado de los nodos adyacentes.
+
+Se busca **Minimizar** el costo.
+
 ## Representación de la solución
 La solución tiene codificacion de **combinación** con un tamaño igual a la cantidad de nodos. Para este ejemplo de implementación se utilizan 10 nodos por lo que el tamaño del arreglo será $n=10$. Cada elemento del arrelo es un número aleatorio entre y la cantidad de nodos que hay en el grafo:  $[1 , n]$
 ``` python
