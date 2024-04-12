@@ -55,7 +55,7 @@ Así que el número cromático de este gráfico es 4 y se denota x(G), significa
 # Implementación
 
 ## Leer el grafo
-Es importante señalar que el csv debe tener solamente numeros enteros [0,1] separados con una **","** ya que si no se cumple con estas especificaciones el código de enseguida no se ejecutará correctamente.
+Es importante señalar que el csv debe tener solamente números enteros [0,1] separados con una **","** ya que si no se cumple con estas especificaciones el código de enseguida no se ejecutará correctamente.
 ``` python
 import networkx as nx
 import numpy as np
@@ -78,7 +78,7 @@ plt.show()
 ## Especificación
 Se considera que **el tamaño de la solución es de tamaño igual a la cantidad de nodos.** También no nos preocupamos por generar una solución que cumpla con las restricciones, ya que la función objetivo se encarga de penalizar las soluciones con conflictos en el coloreado de los nodos adyacentes.
 ## Representación de la solución
-La solución es codificada como combinación con un tamaño igual a la cantidad de nodos. Para este ejemplo implementación se utilizan 10 nodos por lo que el tamaño del arreglo será $n=10$. Cada elemento del arrelo es un número aleatorio entre y la cantidad de nodos que hay en el grafo:  $[1 , n]$
+La solución tiene codificacion de **combinación** con un tamaño igual a la cantidad de nodos. Para este ejemplo de implementación se utilizan 10 nodos por lo que el tamaño del arreglo será $n=10$. Cada elemento del arrelo es un número aleatorio entre y la cantidad de nodos que hay en el grafo:  $[1 , n]$
 ``` python
 actual_solution = [3,10,2,1,5,9,4,1,3,2]
 ```
@@ -89,7 +89,7 @@ actual_vecina = [10,5,2,7,5,6,1,9,2,8]
 ```
 
 ## Función de costo
-La función de costo recibe el arreglo de la solución y el grafo con el que se esta trabajando. Calcula los conflictos que presenta la solucion con respecto a la restricción de los colores adyacentes y devuelve una tupla, donde el primer valor es la cantidad de colores que utilizó esta solución y el costo que esta solución devolvió. El costo es la suma de la cantidad de conflictos más la cantidad de colores.
+La función de costo recibe el arreglo de la solución y el grafo con el que se esta trabajando. Calcula los conflictos que presenta la solucion con respecto a la restricción de los colores adyacentes y devuelve el costo. El costo es la suma de la cantidad de conflictos más la cantidad de colores.
 ``` python
 def graph_coloring(solucion, graph):
     ncolores=len(set(solucion))
@@ -97,7 +97,7 @@ def graph_coloring(solucion, graph):
     for u, v in graph.edges():
         if solucion[u] == solucion[v]:
             conflicts += 1
-    return (ncolores ,conflicts + ncolores)
+    return (conflicts + ncolores)
 ```
 
 ##  Instancias a ejecutar
