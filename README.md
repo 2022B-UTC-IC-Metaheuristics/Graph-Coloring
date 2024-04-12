@@ -22,11 +22,11 @@ El número más pequeño de colores necesarios para colorear un gráfico G se ll
 
 El siguiente gráfico ha sido coloreado usando solo cuatro colores (rojo, azul, verde y amarillo). Este es en realidad el número mínimo de colores necesarios para este grafo en particular, es decir, no podemos colorear este grafo usando menos de cuatro colores mientras nos aseguramos de que los vértices adyacentes tengan un color diferente.
 
-![Grafo de ejemplo](Imagen_GC.png)
+![Grafo de ejemplo](/imagenes/Imagen_GC.png)
 
 Así que el número cromático de este gráfico es 4 y se denota x(G), significa x(G)=4.
 
-## Solucion del Grafo de Ejemplo
+
 
 ### Vector de Solución
 **[S H P C I L G A M]**
@@ -40,57 +40,66 @@ Así que el número cromático de este gráfico es 4 y se denota x(G), significa
 
 ### Matriz de adyacencia
 
-|  |S |H |P |C |I |L |G |A |M |
-|--|--|--|--|--|--|--|--|--|--|
-|**S** |0 |1 |0 |1 |1 |1 |0 |0 |0 |
-|**H** |1 |0 |0 |0 |0 |1 |1 |1 |0 |
-|**P** |0 |0 |0 |0 |0 |1 |1 |0 |0 |
-|**C** |1 |0 |0 |0 |0 |0 |0 |1 |0 |
-|**I** |1 |0 |0 |0 |0 |1 |0 |0 |1 |
-|**L** |1 |1 |1 |0 |1 |0 |1 |0 |1 |
-|**G** |0 |1 |1 |0 |0 |1 |0 |1 |1 |
-|**A** |0 |0 |0 |1 |0 |0 |1 |0 |1 |
-|**M** |0 |0 |0 |0 |1 |1 |1 |1 |0 |
+|       | S | H | P | C | I | L | G | A | M |
+|-------|---|---|---|---|---|---|---|---|---|
+| **S** | 0 | 1 | 0 | 1 | 1 | 1 | 0 | 0 | 0 |
+| **H** | 1 | 0 | 0 | 0 | 0 | 1 | 1 | 1 | 0 |
+| **P** | 0 | 0 | 0 | 0 | 0 | 1 | 1 | 0 | 0 |
+| **C** | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 |
+| **I** | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 1 |
+| **L** | 1 | 1 | 1 | 0 | 1 | 0 | 1 | 0 | 1 |
+| **G** | 0 | 1 | 1 | 0 | 0 | 1 | 0 | 1 | 1 |
+| **A** | 0 | 0 | 0 | 1 | 0 | 0 | 1 | 0 | 1 |
+| **M** | 0 | 0 | 0 | 0 | 1 | 1 | 1 | 1 | 0 |
+
+# Implementación
 
 ## Leer el grafo
+Es importante señalar que el csv debe tener solamente numeros enteros [0,1] separados con una **","** ya que si no se cumple con estas especificaciones el código de enseguida no se ejecutará correctamente.
 ``` python
+import networkx as nx
+import numpy as np
+import matplotlib.pyplot as plt
 import csv
-newMatrix = []
-with open('nombre.csv', 'r', newline='') as file:
-  myreader = csv.reader(file, delimiter=',')
-  for rows in myreader:
-   newMatrix.append(rows)
-newMatrix = np.array(newMatrix)
+graph = []
+with open('10nodos.csv', 'r', newline='') as file:
+    myreader = csv.reader(file, delimiter=',')
+    for row in myreader:
+        # Convierte cada elemento de la fila en un entero
+        int_row = [int(cell) for cell in row]
+        graph.append(int_row)
+graph = np.array(graph)
+G = nx.from_numpy_array(graph)
+nx.draw(G, with_labels=True, node_color='orange', font_weight='bold')
+plt.show()
+```
+![Grafo de ejemplo](/imagenes/grafo_10nodos.png)
+
+## Especificación
+Se considera que **el tamaño de la solución es de tamaño igual a la cantidad de nodos.** También no nos preocupamos por generar una solución que cumpla con las restricciones, ya que la función objetivo se encarga de penalizar las soluciones con conflictos en el coloreado de los nodos adyacentes.
+## Representación de la solución
+La solución es codificada como combinación con un tamaño igual a la cantidad de nodos. Para este ejemplo implementación se utilizan 10 nodos por lo que el tamaño del arreglo será $n=10$. Cada elemento del arrelo es un número aleatorio entre y la cantidad de nodos que hay en el grafo:  $[1 , n]$
+``` python
+actual_solution = [3,10,2,1,5,9,4,1,3,2]
+```
+## Generación de una solución vecina
+Para generar una solución vecina se genera un nuevo arreglo de tamaño igual al tamaño de nodos. No se toma en cuenta si la solución cumple con la restricción de adyacencias ya que la función objetivo se encarga de ello. Para este ejemplo de implementación **se utilizarón 10 nodos** por lo que el arreglo debe ser de tamaño $n=10$. Cada elemento del arrelo es un número aleatorio entre y la cantidad de nodos que hay en el grafo: [1,n]
+``` python
+actual_vecina = [10,5,2,7,5,6,1,9,2,8]
 ```
 
 ## Función de costo
+La función de costo recibe el arreglo de la solución y el grafo con el que se esta trabajando. Calcula los conflictos que presenta la solucion con respecto a la restricción de los colores adyacentes y devuelve una tupla, donde el primer valor es la cantidad de colores que utilizó esta solución y el costo que esta solución devolvió. El costo es la suma de la cantidad de conflictos más la cantidad de colores.
 ``` python
-def Costo(sol):
-  ncolores=len(Counter(sol))
-  return ncolores
+def graph_coloring(solucion, graph):
+    ncolores=len(set(solucion))
+    conflicts = 0
+    for u, v in graph.edges():
+        if solucion[u] == solucion[v]:
+            conflicts += 1
+    return (ncolores ,conflicts + ncolores)
 ```
 
-## Funcion generar vecino
-``` python
-#Comprobar cada borde
-def isSafe(graph, color, size):
-  for i in range(size):
-    for j in range(i + 1, size):
-      if (graph[i][j] and color[j] == color[i]):
-        return False
-  return True
-
-def Genera_Vecino(size,graph):
-  sol = [0 for i in range(size)]
-  ncolor=random.uniform(1, size+1)
-  for i in range(size):
-    r = int(random.uniform(1, ncolor))
-    sol[i] = r
-  #verfifica que la solucion sea valida  
-  if (isSafe(graph, sol,size))==-1:
-    sol=Genera_Vecino(size,graph)
-  return sol
-```
 ##  Instancias a ejecutar
 ``` python
 solucion = Genera_Vecino(10, newMatrix)
@@ -100,32 +109,54 @@ print("Número Crómatico: ", Costo(solucion))
 
 ### 10 Nodos
 
-|0|1|0|0|0|0|0|1|1|0|
-|-|-|-|-|-|-|-|-|-|-|
-|1|0|0|1|0|1|0|1|1|0|
-|0|0|0|1|0|0|0|0|0|1|
-|0|1|1|0|1|1|0|0|1|0|
-|0|0|0|1|0|0|0|1|0|0|
-|0|1|0|1|0|0|1|1|0|1|
-|0|0|0|0|0|1|0|0|1|0|
-|1|1|0|0|1|1|0|0|0|0|
-|1|1|0|1|0|0|1|0|0|0|
-|0|0|1|0|0|1|0|0|0|0|
+| 0 | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 1 | 0 |
+|---|---|---|---|---|---|---|---|---|---|
+| 1 | 0 | 0 | 1 | 0 | 1 | 0 | 1 | 1 | 0 |
+| 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 1 |
+| 0 | 1 | 1 | 0 | 1 | 1 | 0 | 0 | 1 | 0 |
+| 0 | 0 | 0 | 1 | 0 | 0 | 0 | 1 | 0 | 0 |
+| 0 | 1 | 0 | 1 | 0 | 0 | 1 | 1 | 0 | 1 |
+| 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 1 | 0 |
+| 1 | 1 | 0 | 0 | 1 | 1 | 0 | 0 | 0 | 0 |
+| 1 | 1 | 0 | 1 | 0 | 0 | 1 | 0 | 0 | 0 |
+| 0 | 0 | 1 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
 
-Solución:  [7, 10, 8, 5, 8, 8, 5, 5, 3, 6]
+Solución:  [4, 10, 8, 4, 10, 5, 10, 8, 8, 4]
 
-Número Crómatico:  6
+Número Crómatico:  4
 
-![Grafo de ejemplo 2](GC_10Nodos.png)
+![Grafo de ejemplo 2](/imagenes/solucion_10nodos.png)
 
 ### 125 Nodos
 
-Solución:  [15, 53, 6, 24, 45, 121, 1, 72, 88, 56, 120, 79, 69, 8, 50, 16, 109, 89, 30, 19, 90, 20, 50, 60, 35, 65, 2, 92, 111, 110, 68, 80, 89, 114, 9, 78, 86, 98, 11, 46, 78, 46, 108, 73, 83, 124, 3, 3, 119, 74, 77, 81, 88, 89, 38, 6, 109, 18, 19, 24, 64, 15, 58, 66, 121, 64, 14, 57, 74, 96, 105, 21, 94, 97, 89, 77, 106, 112, 82, 44, 94, 40, 118, 32, 6, 15, 91, 50, 9, 59, 119, 61, 36, 17, 43, 82, 113, 88, 84, 105, 52, 20, 92, 29, 32, 15, 57, 20, 63, 116, 71, 68, 120, 6, 73, 108, 28, 118, 6, 5, 92, 69, 77, 107, 123]
+Solución:  [ 11 17  69  64  89  47 124 109  82 104  84 119  58  70 106  79   1  74
+   9  88 106  26  91  69  57  84  91  79 116  49  30  81  48  60  99  30
+  38 116  80  18  52  11  42  42   5  91  52  96 105  84  67 118  17  57
+  53 118  94 113 125  76  53 110  90  15 110 125  46  82  34  57 110  89
+  93 124 100  53  80  25  24  79  65  52  65  13  57  47 118  50  11  65
+  58  24  71  93 120 102  69  93  21  53  36 119  34  89 103  49  50  47
+ 107 116  90  79  37  22  84  95 102   3  26   1  81  81  38 120  46]
 
-Número Crómatico:  83
+Número Crómatico:  71
 
 ### 300 Nodos
 
-Solución:  [57, 48, 58, 60, 40, 41, 36, 53, 36, 50, 55, 44, 4, 16, 3, 41, 7, 28, 21, 35, 43, 19, 3, 5, 38, 60, 41, 37, 40, 2, 23, 47, 32, 43, 20, 18, 20, 34, 37, 48, 43, 24, 19, 5, 14, 10, 51, 17, 62, 26, 44, 38, 33, 60, 58, 39, 61, 22, 41, 46, 45, 58, 27, 60, 33, 34, 14, 35, 40, 43, 7, 38, 56, 22, 17, 35, 51, 34, 36, 7, 19, 19, 56, 30, 53, 25, 21, 25, 30, 57, 1, 1, 5, 32, 44, 1, 47, 42, 23, 35, 53, 26, 22, 9, 24, 47, 47, 27, 45, 28, 46, 42, 52, 53, 17, 1, 4, 13, 30, 53, 22, 34, 14, 2, 32, 3, 53, 61, 19, 35, 22, 59, 25, 21, 2, 7, 30, 58, 35, 35, 18, 7, 32, 31, 60, 19, 32, 53, 1, 51, 59, 20, 6, 12, 11, 19, 58, 50, 57, 37, 27, 30, 52, 54, 38, 31, 40, 46, 14, 47, 3, 53, 25, 4, 28, 54, 39, 37, 56, 31, 41, 43, 48, 24, 13, 27, 22, 46, 14, 29, 42, 52, 62, 37, 49, 34, 26, 22, 57, 11, 39, 19, 26, 46, 13, 38, 48, 12, 21, 9, 18, 27, 7, 29, 56, 43, 49, 17, 59, 55, 1, 53, 21, 8, 19, 3, 44, 43, 43, 36, 35, 25, 26, 15, 51, 52, 15, 33, 57, 42, 57, 46, 38, 56, 46, 19, 45, 52, 6, 44, 51, 12, 19, 52, 25, 28, 33, 40, 40, 24, 47, 15, 38, 11, 40, 52, 37, 46, 40, 60, 8, 44, 57, 8, 1, 20, 8, 44, 39, 51, 58, 16, 60, 28, 36, 21, 52, 18, 8, 24, 25, 45, 39, 34, 49, 1, 10, 11, 36, 38]
+Solución:  [103  60 192 226 225 287  43 280  96 246 288 144 225 168 186 246 167 147
+ 300 103 216  19 118 235 160 192 257 100 104 163 129  11  76 123 288 132
+ 257 151 292  47 295 213 111  88 167 223 279  50  51 189  29 199  83 180
+ 186 200 248  14  16 111 219 269  54  93 255 298  25 253 276  73 235 169
+ 136 186 185 233  85 145  47 132 192   2 172  73 201 145  98   3  13 232
+  36 223 115 201 115  41 269  72 239 115 214 204 269 274 262 102  17  26
+  17  33  60 190 195 124   6 224 222 286 266 175  35 186  93  88 155  63
+ 299 266 213 157 199  26 209 102 247 273 272  95  31 106   8 263   3  98
+  36 212  82  44  11 118 131  88 137 154 284  24 224 184 138 152 234 270
+  74 252  44 136 129 150 131 261   6 220 190  29 192 172 129  58  73 190
+ 280  96 221  23 150 123 203 224 247 266 196   2 245 114 182  16 255 242
+  98 213  52 114 246 219 234  58 155  87 108 151 178  85 233 214 217 241
+ 187 105  44 142 289 147 168  17  86 172 201  59 253 241 175  54  23 144
+ 229 124 119 261   7  86 142 260 105 216 227  70 197 217 175 243  61 213
+ 174  14 225  89  64 260  23 128 286 210 138 128  65  81 202 261 278 219
+ 206  98 201 266  32 290  36 101 139 123 261 197 101 253 237 295 225 121
+  45   2 135  63 219 172 136 261 146 217 156  53]
 
-Número Crómatico:  62
+Número Crómatico:  238
