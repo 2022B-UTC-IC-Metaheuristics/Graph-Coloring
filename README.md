@@ -98,7 +98,7 @@ def graph_coloring(solucion, graph):
     for u, v in graph.edges():
         if solucion[u] == solucion[v]:
             conflicts += 1
-    return (conflicts + ncolores)
+    return conflicts + ncolores
 ```
 
 ##  Instancias a ejecutar
