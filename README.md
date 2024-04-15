@@ -126,6 +126,15 @@ sa = SimulatedAnnealing(**parametros)
 colors = sa.fit(graph_coloring)
 print(colors)
 ```
+[10 nodos](csv/10nodos.csv)
+[50 nodos](csv/50nodos.csv)
+[125 nodos](csv/125nodos.csv)
+[300 nodos](csv/300nodos.csv)
+[450 nodos](csv/450nodos.csv)
+[500 nodos](csv/500nodos.csv)
+[500 nodos HellDive Mode](csv/500nodosHard.csv)
+[1000 nodos](csv/1000nodos.csv)
+
 
 ### 10 Nodos
 
