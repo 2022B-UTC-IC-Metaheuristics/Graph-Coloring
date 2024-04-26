@@ -156,6 +156,14 @@ Número Crómatico:  4
 
 ![Grafo de ejemplo 2](/imagenes/solucion_10nodos.png)
 
+### 50 Nodos
+
+Solución: [50 42 12 24 42 40  8  6 21 32 24 43 13  8 49 32 21 34 24 49  6 18 43 39
+ 10 38 27 16 32 20 30 24 27 28 50 47  6  8  7 24 50 12 43 12 32  8  9 39
+ 40 38]
+
+Número Crómatico:  25
+
 ### 125 Nodos
 
 Solución:  [ 11 17  69  64  89  47 124 109  82 104  84 119  58  70 106  79   1  74
